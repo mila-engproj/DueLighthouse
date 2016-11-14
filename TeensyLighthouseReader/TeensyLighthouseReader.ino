@@ -31,15 +31,25 @@ void loop() {
 
   // Check SysTick control values:
   Serial.print("Control (bin): ");
-  Serial.print(*control, BIN);
-  Serial.println("");
+  Serial.println(*control, BIN);
 
 
   // Check SysTick load value:
   Serial.print("Reload (dec): ");
-  Serial.print(*load);
-  Serial.println("");
+  Serial.println(*load);
+
+    // Check SysTick load value:
+  Serial.print("Current (dec): ");
+  Serial.println(*current);
+
+  // Check SysTick load value:
+  Serial.print("Calib (bin): ");
+  Serial.println(*load, BIN);
+
+  // Check SysTick load value:
+  Serial.print("Calib (dec): ");
+  Serial.println(*load);
 
   // Don't print too fast
-  delay(1000);
+  delay(5000);
 }
