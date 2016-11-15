@@ -1,15 +1,43 @@
-// Control and status register addr
-int* control;
+class SysTick {
+  private:
+  // Control and status register addr
+  int* CONTROL;
 
-// Reload value register addr
-int* load;
+  // Reload value register addr
+  int* LOAD;
 
-// Current value register addr
-int* current;
+  // Current value register addr
+  int* VAL;
 
-// Calibration value register addr
-int* calib;
+  // Calibration value register addr
+  int* CALIB;
 
+  public:
+  SysTick() {
+    CONTROL = (int*) 0xE000E010;
+    LOAD =  (int*) 0xE000E014;
+    VAL = (int*) 0xE000E018;
+    CALIB = (int*) 0xE000E01C;
+  }
+
+  int getControl() {
+    return *CONTROL;
+  }
+
+  int getLoad() {
+    return *LOAD;
+  }
+
+  int getVal() {
+    return *VAL;
+  }
+
+  int getCalib() {
+    return *CALIB;
+  }
+};
+
+SysTick* sysTick = new SysTick();
 
 void setup() {
   // put your setup code here, to run once:
@@ -17,12 +45,6 @@ void setup() {
 
   // Set up serial
   Serial.begin(9600);
-
-  // Set up SysTick addresses
-  control = (int*) 0xE000E010;
-  load =  (int*) 0xE000E014;
-  current = (int*) 0xE000E018;
-  calib = (int*) 0xE000E01C;
 }
 
 void loop() {
@@ -31,24 +53,23 @@ void loop() {
 
   // Check SysTick control values:
   Serial.print("Control (bin): ");
-  Serial.println(*control, BIN);
-
+  Serial.println(sysTick->getControl(), BIN);
 
   // Check SysTick load value:
   Serial.print("Reload (dec): ");
-  Serial.println(*load);
+  Serial.println(sysTick->getLoad());
 
-    // Check SysTick load value:
+    // Check SysTick current value:
   Serial.print("Current (dec): ");
-  Serial.println(*current);
+  Serial.println(sysTick->getVal());
 
-  // Check SysTick load value:
+  // Check SysTick calib value:
   Serial.print("Calib (bin): ");
-  Serial.println(*load, BIN);
+  Serial.println(sysTick->getCalib(), BIN);
 
-  // Check SysTick load value:
+  // Check SysTick calib value:
   Serial.print("Calib (dec): ");
-  Serial.println(*load);
+  Serial.println(sysTick->getCalib());
 
   // Don't print too fast
   delay(5000);
